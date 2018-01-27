@@ -1,6 +1,6 @@
 # rxan-react
 
-React adaptor package for rxan
+[React](https://reactjs.org) adaptor package for [rxan](https://github.com/Ailrun/rxan-core)
 
 ## Requirement
 
@@ -21,7 +21,7 @@ You can see a live example at [CodePen](https://codepen.io/ailrun/pen/MQgWeW).
 
 ### Code examples
 
-Following examples assumes that you use ES6 module. You can use ES6 module by using [webpack] or [rollup] or any other bundlers.
+Following examples assume that you use ES6 module. You can use ES6 module by using [webpack] or [rollup] or any other bundlers.
 
 ```javascript
 import React from 'react'

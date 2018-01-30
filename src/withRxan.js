@@ -2,15 +2,15 @@ import React from 'react'
 
 const withRxan = (value$, config) => (C) => {
   if (config.startPropName !== undefined) {
-    console.warn('Props \'startPropName\' is deprecated. Please use \'mapAnimationToProps\' instead.')
+    console.warn('Config \'startPropName\' is deprecated. Please use \'mapAnimationToProps\' instead.')
   }
 
   if (config.stopPropName !== undefined) {
-    console.warn('Props \'stopPropName\' is deprecated. Please use \'mapAnimationToProps\' instead.')
+    console.warn('Config \'stopPropName\' is deprecated. Please use \'mapAnimationToProps\' instead.')
   }
 
   if (config.valuePropName !== undefined) {
-    console.warn('Props \'valuePropName\' is deprecated. Please use \'mapAnimationToProps\' instead.')
+    console.warn('Config \'valuePropName\' is deprecated. Please use \'mapAnimationToProps\' instead.')
   }
 
   config = {

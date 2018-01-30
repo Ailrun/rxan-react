@@ -95,10 +95,27 @@ var possibleConstructorReturn = function (self, call) {
 
 var withRxan = function withRxan(value$, config) {
   return function (C) {
+    if (config.startPropName !== undefined) {
+      console.warn('Props \'startPropName\' is deprecated. Please use \'mapAnimationToProps\' instead.');
+    }
+
+    if (config.stopPropName !== undefined) {
+      console.warn('Props \'stopPropName\' is deprecated. Please use \'mapAnimationToProps\' instead.');
+    }
+
+    if (config.valuePropName !== undefined) {
+      console.warn('Props \'valuePropName\' is deprecated. Please use \'mapAnimationToProps\' instead.');
+    }
+
     config = _extends({
       startPropName: 'start',
       stopPropName: 'stop',
-      valuePropName: 'value'
+      valuePropName: 'value',
+      mapAnimationToProps: function mapAnimationToProps(value, start, stop) {
+        var _ref;
+
+        return _ref = {}, defineProperty(_ref, this.valuePropName, value), defineProperty(_ref, this.startPropName, start), defineProperty(_ref, this.stopPropName, stop), _ref;
+      }
     }, config);
 
     return function (_React$Component) {
@@ -110,9 +127,9 @@ var withRxan = function withRxan(value$, config) {
         var _this = possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props, context));
 
         _this.state = {
-          lastValue: undefined,
-          subscription: undefined
+          lastValue: undefined
         };
+        _this.subscription = undefined;
 
         _this.start = _this.start.bind(_this);
         _this.stop = _this.stop.bind(_this);
@@ -124,45 +141,28 @@ var withRxan = function withRxan(value$, config) {
         value: function start() {
           var _this2 = this;
 
-          this.setState(function (state) {
-            if (state.subscription) {
-              return {};
-            }
-
-            return {
-              subscription: value$.subscribe(function (v) {
-                _this2.setState({
-                  lastValue: v
-                });
-              }, undefined, function () {
-                _this2.setState({
-                  subscription: undefined
-                });
-              })
-            };
-          });
+          if (!this.subscription) {
+            this.subscription = value$.subscribe(function (v) {
+              _this2.setState({
+                lastValue: v
+              });
+            }, undefined, function () {
+              _this2.stop();
+            });
+          }
         }
       }, {
         key: 'stop',
         value: function stop() {
-          this.setState(function (state) {
-            if (!state.subscription) {
-              return {};
-            }
-
-            state.subscription.unsubscribe();
-
-            return {
-              subscription: undefined
-            };
-          });
+          if (this.subscription) {
+            this.subscription.unsubscribe();
+            this.subscription = undefined;
+          }
         }
       }, {
         key: 'render',
         value: function render() {
-          var _addedProps;
-
-          var addedProps = (_addedProps = {}, defineProperty(_addedProps, config.startPropName, this.start), defineProperty(_addedProps, config.stopPropName, this.stop), defineProperty(_addedProps, config.valuePropName, this.state.lastValue), _addedProps);
+          var addedProps = config.mapAnimationToProps(this.state.lastValue, this.start, this.stop);
 
           return React.createElement(C, _extends({}, this.props, addedProps));
         }

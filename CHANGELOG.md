@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- Now, withRxan has new config option.
+    - config.mapAnimationToProps
+
+### Changed
+- Following config options for withRxan is now deprecated.
+    - config.valuePropName
+    - config.startPropName
+    - config.stopPropName
+
 ## [1.0.0] - 2018-01-27
 
 ### Added

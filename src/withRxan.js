@@ -1,10 +1,29 @@
 import React from 'react'
 
 const withRxan = (value$, config) => (C) => {
+  if (config.startPropName !== undefined) {
+    console.warn('Props \'startPropName\' is deprecated. Please use \'mapAnimationToProps\' instead.')
+  }
+
+  if (config.stopPropName !== undefined) {
+    console.warn('Props \'stopPropName\' is deprecated. Please use \'mapAnimationToProps\' instead.')
+  }
+
+  if (config.valuePropName !== undefined) {
+    console.warn('Props \'valuePropName\' is deprecated. Please use \'mapAnimationToProps\' instead.')
+  }
+
   config = {
     startPropName: 'start',
     stopPropName: 'stop',
     valuePropName: 'value',
+    mapAnimationToProps(value, start, stop) {
+      return {
+        [this.valuePropName]: value,
+        [this.startPropName]: start,
+        [this.stopPropName]: stop,
+      }
+    },
     ...config,
   }
 
@@ -56,11 +75,8 @@ const withRxan = (value$, config) => (C) => {
     }
 
     render() {
-      const addedProps = {
-        [config.startPropName]: this.start,
-        [config.stopPropName]: this.stop,
-        [config.valuePropName]: this.state.lastValue,
-      }
+      const addedProps =
+        config.mapAnimationToProps(this.state.lastValue, this.start, this.stop)
 
       return (
         <C {...this.props} {...addedProps} />

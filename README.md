@@ -31,9 +31,6 @@ import { withRxan } from 'rxan-react'
 const animation = duration()(500) // Creates values of 0~1
   .map(easing.sine) // Adds easing function to values of 0~1
   .map((v) => v * 100) // Maps values of 0~1 to values of 0~100
-  .map((v) => ({
-    transform: 'translateX(-' + v + '%)',
-  })) // Maps values of 0~100 to CSS style with a transform property
 
 class App extends React.Component {
   componentDidMount() {
@@ -49,19 +46,31 @@ class App extends React.Component {
 }
 
 export withRxan(animation, {
-  valuePropName: 'style', // names props for result values of animation observable
+  // maps props for result values of animation observable
+  mapAnimationToProps(value, start) {
+    return {
+      start,
+      style: {
+        transform: 'translateX(-' + value + '%)'
+      }
+    }
+  },
 })(App)
 ```
 
 ### API
 
-- `withRxan(observable, config)(component)`
-    - `observable`: any observable.
-    - `config`: configuration for `withRxan`
-        - `config.valuePropName`: name for result values of observable.
-        - `config.startPropName`: name for the function that start running the observable.
-        - `config.stopPropName`: name for the function that stop running the observable.
-    - `component`: any React component that accepts `[config.valuePropName]`, `[config.startPropName]`, `config.stopPropName` as props.
+- **withRxan(observable, config)(component)**
+    - **observable**: any observable.
+    - **config**: configuration for **withRxan**
+        - **config.mapAnimationToProps(value, start, stop)**: mapping value, start, stop to props.
+            - **value**: current value of observable
+            - **start**: function to start observable
+            - **stop**: function to stop observable
+        - ~**config.valuePropName**: name for result values of observable.~
+        - ~**config.startPropName**: name for the function that start running the observable.~
+        - ~**config.stopPropName**: name for the function that stop running the observable.~
+    - **component**: any React component that accepts `config.mapAnimation(value, start, stop)` as part of props.
 
 [webpack]: https://webpack.js.org/
 [rollup]: https://rollupjs.org/guide/en

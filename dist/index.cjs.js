@@ -102,27 +102,40 @@ var possibleConstructorReturn = function (self, call) {
 var withRxan = function withRxan(value$, config) {
   return function (C) {
     if (config.startPropName !== undefined) {
-      console.warn('Props \'startPropName\' is deprecated. Please use \'mapAnimationToProps\' instead.');
+      console.warn('Config \'startPropName\' is deprecated. Please use \'mapAnimationToProps\' instead.');
     }
 
     if (config.stopPropName !== undefined) {
-      console.warn('Props \'stopPropName\' is deprecated. Please use \'mapAnimationToProps\' instead.');
+      console.warn('Config \'stopPropName\' is deprecated. Please use \'mapAnimationToProps\' instead.');
     }
 
     if (config.valuePropName !== undefined) {
-      console.warn('Props \'valuePropName\' is deprecated. Please use \'mapAnimationToProps\' instead.');
+      console.warn('Config \'valuePropName\' is deprecated. Please use \'mapAnimationToProps\' instead.');
     }
 
     config = _extends({
       startPropName: 'start',
       stopPropName: 'stop',
       valuePropName: 'value',
+      autoStartAt: 'nothing',
+      stopBeforeAutoStart: false,
       mapAnimationToProps: function mapAnimationToProps(value, start, stop) {
         var _ref;
 
         return _ref = {}, defineProperty(_ref, this.valuePropName, value), defineProperty(_ref, this.startPropName, start), defineProperty(_ref, this.stopPropName, stop), _ref;
       }
     }, config);
+
+    switch (config.autoStartAt) {
+      case 'nothing':
+      case 'constructor':
+      case 'componentDidMount':
+      case 'componentWillUpdate':
+      case 'componentDidUpdate':
+        break;
+      default:
+        console.error('Config autoStartAt has invalid value. It should be one of the following.\n    undefined\n    \'nothing\'\n    \'constructor\'\n    \'componentDidMount\'\n    \'componentWillUpdate\'\n    \'componentDidUpdate\'');
+    }
 
     return function (_React$Component) {
       inherits(_class, _React$Component);
@@ -137,12 +150,52 @@ var withRxan = function withRxan(value$, config) {
         };
         _this.subscription = undefined;
 
+        _this.autoStart = _this.autoStart.bind(_this);
         _this.start = _this.start.bind(_this);
         _this.stop = _this.stop.bind(_this);
+
+        if (config.autoStartAt === 'constructor') {
+          _this.autoStart();
+        }
         return _this;
       }
 
       createClass(_class, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+          if (config.autoStartAt === 'componentDidMount') {
+            this.autoStart();
+          }
+        }
+      }, {
+        key: 'componentWillUpdate',
+        value: function componentWillUpdate() {
+          if (config.autoStartAt === 'componentWillUpdate') {
+            this.autoStart();
+          }
+        }
+      }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+          if (config.autoStartAt === 'componentDidUpdate') {
+            this.autoStart();
+          }
+        }
+      }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+          this.stop();
+        }
+      }, {
+        key: 'autoStart',
+        value: function autoStart() {
+          if (config.stopBeforeAutoStart) {
+            this.stop();
+          }
+
+          this.start();
+        }
+      }, {
         key: 'start',
         value: function start() {
           var _this2 = this;

@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.1.1] - 2018-01-30
+
 ### Added
 - Now, withRxan has new config options.
     - config.autoStartAt
@@ -41,5 +43,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     - config.stopPropName
 
 [Unreleased]: https://github.com/Ailrun/rxan-react
-[1.0.0]: https://github.com/Ailrun/rxan-react/tree/v1.0.0
+[1.1.1]: https://github.com/Ailrun/rxan-react/tree/v1.1.1
 [1.1.0]: https://github.com/Ailrun/rxan-react/tree/v1.1.0
+[1.0.0]: https://github.com/Ailrun/rxan-react/tree/v1.0.0

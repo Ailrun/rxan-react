@@ -63,7 +63,8 @@ export withRxan(animation, {
 - **withRxan(observable, config)(component)**
     - **observable**: any observable.
     - **config**: configuration for **withRxan**
-        - **config.mapAnimationToProps(value, start, stop)**: mapping value, start, stop to props.
+        - **config.mapAnimationToProps(value, start, stop)**: mapping value, start, stop to props.  
+          This function should returns object or `null`/`undefined`.
             - **value**: current value of observable
             - **start**: function to start observable
             - **stop**: function to stop observable

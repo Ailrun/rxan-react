@@ -33,45 +33,30 @@ const withRxan = (value$, config) => (C) => {
 
       this.state = {
         lastValue: undefined,
-        subscription: undefined,
       }
+      this.subscription = undefined
 
       this.start = this.start.bind(this)
       this.stop = this.stop.bind(this)
     }
 
     start() {
-      this.setState((state) => {
-        if (state.subscription) {
-          return {}
-        }
-
-        return {
-          subscription: value$.subscribe((v) => {
-            this.setState({
-              lastValue: v,
-            })
-          }, undefined, () => {
-            this.setState({
-              subscription: undefined,
-            })
-          }),
-        }
-      })
+      if (!this.subscription) {
+        this.subscription = value$.subscribe((v) => {
+          this.setState({
+            lastValue: v,
+          })
+        }, undefined, () => {
+          this.stop()
+        })
+      }
     }
 
     stop() {
-      this.setState((state) => {
-        if (!state.subscription) {
-          return {}
-        }
-
-        state.subscription.unsubscribe()
-
-        return {
-          subscription: undefined,
-        }
-      })
+      if (this.subscription) {
+        this.subscription.unsubscribe()
+        this.subscription = undefined
+      }
     }
 
     render() {

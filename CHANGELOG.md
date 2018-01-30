@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     - config.startPropName
     - config.stopPropName
 
+### Fixed
+- Now starting animation and stopping animation does not rerender component meaninglessly.
+
 ## [1.0.0] - 2018-01-27
 
 ### Added

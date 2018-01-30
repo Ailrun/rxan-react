@@ -83,6 +83,10 @@ const withRxan = (value$, config) => (C) => {
       }
     }
 
+    componentWillUnmount() {
+      this.stop()
+    }
+
     autoStart() {
       if (config.stopBeforeAutoStart) {
         this.stop()

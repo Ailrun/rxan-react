@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     - config.autoStartAt
     - config.stopBeforeAutoStart
 
+### Fixed
+- Observable passed to withRxan is unsubscribed when component is unmounted.
+
 ### Misc
 - Fix typo in deprecated warning message
 

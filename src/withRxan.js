@@ -17,6 +17,8 @@ const withRxan = (value$, config) => (C) => {
     startPropName: 'start',
     stopPropName: 'stop',
     valuePropName: 'value',
+    autoStartAt: 'nothing',
+    stopBeforeAutoStart: false,
     mapAnimationToProps(value, start, stop) {
       return {
         [this.valuePropName]: value,
@@ -25,6 +27,24 @@ const withRxan = (value$, config) => (C) => {
       }
     },
     ...config,
+  }
+
+  switch (config.autoStartAt) {
+  case 'nothing':
+  case 'constructor':
+  case 'componentDidMount':
+  case 'componentWillUpdate':
+  case 'componentDidUpdate':
+    break
+  default:
+    console.error(`Config autoStartAt has invalid value.\
+ It should be one of the following.
+    undefined
+    'nothing'
+    'constructor'
+    'componentDidMount'
+    'componentWillUpdate'
+    'componentDidUpdate'`)
   }
 
   return class extends React.Component {
@@ -36,8 +56,39 @@ const withRxan = (value$, config) => (C) => {
       }
       this.subscription = undefined
 
+      this.autoStart = this.autoStart.bind(this)
       this.start = this.start.bind(this)
       this.stop = this.stop.bind(this)
+
+      if (config.autoStartAt === 'constructor') {
+        this.autoStart()
+      }
+    }
+
+    componentDidMount() {
+      if (config.autoStartAt === 'componentDidMount') {
+        this.autoStart()
+      }
+    }
+
+    componentWillUpdate() {
+      if (config.autoStartAt === 'componentWillUpdate') {
+        this.autoStart()
+      }
+    }
+
+    componentDidUpdate() {
+      if (config.autoStartAt === 'componentDidUpdate') {
+        this.autoStart()
+      }
+    }
+
+    autoStart() {
+      if (config.stopBeforeAutoStart) {
+        this.stop()
+      }
+
+      this.start()
     }
 
     start() {

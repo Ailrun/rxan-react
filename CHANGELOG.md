@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- Now, withRxan has new config options.
+    - config.autoStartAt
+    - config.stopBeforeAutoStart
+
 ### Misc
 - Fix typo in deprecated warning message
 

@@ -67,6 +67,18 @@ export withRxan(animation, {
             - **value**: current value of observable
             - **start**: function to start observable
             - **stop**: function to stop observable
+        - **config.autoStartAt**: auto start observable when specified lifecycle method called.  
+          Possible values are:
+          `'nothing'`, `'constructor'`,
+          `'componentDidMount'`, `'componentWillUpdate'`, `'componentDidUpdate'`.  
+          Default value is `'nothing'`.  
+          Some lifecycle methods are excluded as intended,
+          because these lifecycle methods are not of the component passed to withRxan,
+          but of the component that withRxan makes (in the other words, you cannot control those).  
+          i.e., there is no state-related difference between `constructor` and `componentWillMount`,
+          there is no `shouldComponentUpdate`-related difference between `componentReceiveProps` and `componentWillUpdate`, and so on.
+          If you find any wierdness, please [make an issue on github](https://github.com/Ailrun/rxan-react/issues)
+        - **config.stopBeforeAutoStart**: whether stop or does not before auto start.
         - ~**config.valuePropName**: name for result values of observable.~
         - ~**config.startPropName**: name for the function that start running the observable.~
         - ~**config.stopPropName**: name for the function that stop running the observable.~

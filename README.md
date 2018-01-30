@@ -67,6 +67,16 @@ export withRxan(animation, {
             - **value**: current value of observable
             - **start**: function to start observable
             - **stop**: function to stop observable
+          Default value is
+          ```javascript
+          function (value, start, stop) {
+            return {
+              [config.valuePropName]: value,
+              [config.startPropName]: start,
+              [config.stopPropName]: stop,
+            }
+          }
+          ```
         - **config.autoStartAt**: auto start observable when specified lifecycle method called.  
           Possible values are:
           `'nothing'`, `'constructor'`,
@@ -79,9 +89,9 @@ export withRxan(animation, {
           there is no `shouldComponentUpdate`-related difference between `componentReceiveProps` and `componentWillUpdate`, and so on.
           If you find any wierdness, please [make an issue on github](https://github.com/Ailrun/rxan-react/issues)
         - **config.stopBeforeAutoStart**: whether stop or does not before auto start.
-        - ~**config.valuePropName**: name for result values of observable.~
-        - ~**config.startPropName**: name for the function that start running the observable.~
-        - ~**config.stopPropName**: name for the function that stop running the observable.~
+        - ~**config.valuePropName**: name for result values of observable. Default value is `value`.~
+        - ~**config.startPropName**: name for the function that start running the observable. Default value is `start`.~
+        - ~**config.stopPropName**: name for the function that stop running the observable. Default value is `stop`~
     - **component**: any React component that accepts `config.mapAnimation(value, start, stop)` as part of props.
 
 [webpack]: https://webpack.js.org/

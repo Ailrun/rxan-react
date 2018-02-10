@@ -1,16 +1,28 @@
 # rxan-react
 
-[React](https://reactjs.org) adaptor package for [rxan](https://github.com/Ailrun/rxan-core)
+[![npm latest version](https://img.shields.io/npm/v/rxan-react/latest.svg)](https://www.npmjs.com/package/rxan-react)
+[![npm total download](https://img.shields.io/npm/dt/rxan-react.svg)](https://www.npmjs.com/package/rxan-react)
+[![github license](https://img.shields.io/github/license/Ailrun/rxan-react.svg)](https://github.com/Ailrun/rxan-react/blob/master/LICENSE)
+[![github latest tag](https://img.shields.io/github/tag/Ailrun/rxan-react.svg)](https://github.com/Ailrun/rxan-react/tags)
+[![github commit from latest](https://img.shields.io/github/commits-since/Ailrun/rxan-react/latest.svg)](https://github.com/Ailrun/rxan-react)
+
+[React] adaptor package for [rxan](https://github.com/Ailrun/rxan-core)
 
 ## Requirement
 
-This package requires React@^15||^16 and RxJS@^5 as peer dependencies.
-You should install react and rxjs in your project to use this package.
+This package requires `react@^15||^16` and `rxjs@^5||^6` as peer dependencies.
+You should install [React] and RxJS in your project to use this package.
 
 ## How to install
 
+To use with `rxjs@^5`
 ```
-npm install rxan-core rxan-react
+npm install --save rxan-core rxan-react
+```
+
+To use with `rxjs@^6`
+```
+npm install --save rxan-core@alpha rxan-react
 ```
 
 ## How to use
@@ -21,7 +33,7 @@ You can see a live example at [CodePen](https://codepen.io/ailrun/pen/MQgWeW).
 
 ### Code examples
 
-Following examples assume that you use ES6 module. You can use ES6 module by using [webpack] or [rollup] or any other bundlers.
+Following examples assume that you use ES6 module. You can use ES6 module by using [Webpack] or [Rollup] or any other bundlers.
 
 ```javascript
 import React from 'react'
@@ -95,5 +107,6 @@ export withRxan(animation, {
         - ~**config.stopPropName**: name for the function that stop running the observable. Default value is `stop`~
     - **component**: any React component that accepts `config.mapAnimation(value, start, stop)` as part of props.
 
-[webpack]: https://webpack.js.org/
-[rollup]: https://rollupjs.org/guide/en
+[Webpack]: https://webpack.js.org/
+[Rollup]: https://rollupjs.org/guide/en
+[React]: https://reactjs.org

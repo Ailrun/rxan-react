@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.1.3] - 2018-02-10
+
 ### Fixed
 - Fix semver of RxJS to support v6
 
@@ -51,6 +53,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     - config.stopPropName
 
 [Unreleased]: https://github.com/Ailrun/rxan-react
+[1.1.3]: https://github.com/Ailrun/rxan-react/tree/v1.1.3
 [1.1.2]: https://github.com/Ailrun/rxan-react/tree/v1.1.2
 [1.1.1]: https://github.com/Ailrun/rxan-react/tree/v1.1.1
 [1.1.0]: https://github.com/Ailrun/rxan-react/tree/v1.1.0

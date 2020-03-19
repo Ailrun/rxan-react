@@ -2,13 +2,11 @@ const path = require('path')
 const process = require('process')
 const util = require('util')
 
-const babelrc = require('babelrc-rollup').default
 const chalk = require('chalk')
 const rimraf = require('rimraf')
-const rollup = require('rollup')
+const { rollup } = require('rollup')
 const babel = require('rollup-plugin-babel')
-const uglify = require('rollup-plugin-uglify')
-const { minify } = require('uglify-es')
+const { terser } = require('rollup-plugin-terser')
 
 const pkg = require('../package.json')
 
@@ -42,17 +40,13 @@ const inputOptions = {
   },
   dev: {
     plugins: [
-      babel(babelrc({
-        addModuleOptions: false,
-      })),
+      babel(),
     ],
   },
   prod: {
     plugins: [
-      babel(babelrc({
-        addModuleOptions: false,
-      })),
-      uglify({}, minify),
+      babel(),
+      terser(),
     ],
   },
 }
@@ -61,34 +55,11 @@ const globals = {
   'react': 'React',
 }
 
-const formatBundleNames = (bundleNames, indentNumber) => {
-  const indent = ' '.repeat(indentNumber)
-
-  const [result] = bundleNames.reduce(([result, length], bundleName, index) => {
-    if (index !== 0) {
-      const newLength = length + bundleName.length
-
-      if (newLength <= 60) {
-        return [`${result}, ${bundleName}`, newLength]
-      } else {
-        return [`${result},\n${indent}${bundleName}`, bundleName.length]
-      }
-    } else {
-      return [`${indent}${bundleName}`, bundleName.length]
-    }
-  }, ['', 0])
-
-  return result
-}
-
 const buildDev = async () => {
-  const bundle = await rollup.rollup({
+  const bundle = await rollup({
     ...inputOptions.common,
     ...inputOptions.dev,
   })
-
-  console.log(chalk.yellow(`dev imports:\n${formatBundleNames(bundle.imports, 4)}`))
-  console.log(chalk.yellow(`dev exports:\n${formatBundleNames(bundle.exports, 4)}`))
 
   // Write cjs.js
   await bundle.write({
@@ -117,13 +88,10 @@ const buildDev = async () => {
 const toMinPath = (path) => path.replace(/\.js$/, '.min.js')
 
 const buildProd = async () => {
-  const bundle = await rollup.rollup({
+  const bundle = await rollup({
     ...inputOptions.common,
     ...inputOptions.prod,
   })
-
-  console.log(chalk.yellow(`prod imports:\n${formatBundleNames(bundle.imports, 4)}`))
-  console.log(chalk.yellow(`prod exports:\n${formatBundleNames(bundle.exports, 4)}`))
 
   const minPath = {
     main: toMinPath(pkg.main),
